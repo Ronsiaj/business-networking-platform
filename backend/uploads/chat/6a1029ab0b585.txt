@@ -1,0 +1,861 @@
+activate_account.php
+<?php
+require_once __DIR__ . '/../helpers/db.php';
+require_once __DIR__ . '/../helpers/response.php';
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+/* -------------------------------------------------
+   PREFLIGHT
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+/* -------------------------------------------------
+   METHOD VALIDATION
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendError("Method not allowed. Use POST", 405, "METHOD_NOT_ALLOWED");
+}
+
+/* -------------------------------------------------
+   INPUT
+------------------------------------------------- */
+$data = json_decode(file_get_contents("php://input"), true);
+
+$token    = trim($data['token'] ?? '');
+$password = $data['password'] ?? '';
+
+if (!$token || !$password) {
+    sendError("Token and password required", 400, "VALIDATION_ERROR");
+}
+
+/* -------------------------------------------------
+   PASSWORD VALIDATION
+------------------------------------------------- */
+if (strlen($password) < 8) {
+    sendError(
+        "Password must be at least 8 characters",
+        400,
+        "WEAK_PASSWORD"
+    );
+}
+
+/* -------------------------------------------------
+   VALIDATE INVITE TOKEN
+------------------------------------------------- */
+$stmt = $pdo->prepare("
+    SELECT ui.user_id, u.status
+    FROM user_invites ui
+    JOIN users u ON u.id = ui.user_id
+    WHERE ui.token = ?
+      AND ui.used_at IS NULL
+      AND ui.expires_at > NOW()
+    LIMIT 1
+");
+$stmt->execute([$token]);
+$invite = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$invite) {
+    sendError(
+        "Invalid or expired activation link",
+        400,
+        "INVALID_TOKEN"
+    );
+}
+
+/* -------------------------------------------------
+   CHECK USER STATUS
+------------------------------------------------- */
+if ($invite['status'] === 'ACTIVE') {
+    sendError(
+        "Account already activated",
+        400,
+        "ALREADY_ACTIVATED"
+    );
+}
+
+/* -------------------------------------------------
+   TRANSACTION
+------------------------------------------------- */
+try {
+    $pdo->beginTransaction();
+
+    /* HASH PASSWORD */
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    /* ACTIVATE USER */
+    $stmt = $pdo->prepare("
+        UPDATE users
+        SET password = ?,
+            status = 'ACTIVE',
+            email_verified = 1,
+            updated_at = NOW()
+        WHERE id = ?
+    ");
+    $stmt->execute([$hashedPassword, $invite['user_id']]);
+
+    /* MARK INVITE USED */
+    $stmt = $pdo->prepare("
+        UPDATE user_invites
+        SET used_at = NOW()
+        WHERE token = ?
+    ");
+    $stmt->execute([$token]);
+
+    $pdo->commit();
+
+    sendSuccess("Account activated successfully");
+
+} catch (Throwable $e) {
+    $pdo->rollBack();
+
+    sendError(
+        "Failed to activate account",
+        500,
+        "SERVER_ERROR"
+    );
+}
+
+
+hash.php
+<?php
+echo password_hash("", PASSWORD_DEFAULT);
+
+
+invite_create.php
+
+<?php
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../helpers/db.php';
+require_once __DIR__ . '/../auth/middleware.php';
+require_once __DIR__ . '/../helpers/response.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
+/* -------------------------------------------------
+   PREFLIGHT
+------------------------------------------------- */
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+/* -------------------------------------------------
+   METHOD VALIDATION
+------------------------------------------------- */
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendError("Method not allowed. Use POST", 405, "METHOD_NOT_ALLOWED");
+}
+
+/* -------------------------------------------------
+   ADMIN AUTH (IMPORTANT)
+   - Do NOT assign to variable
+   - This itself blocks or allows
+------------------------------------------------- */
+
+require_admin();
+
+/* -------------------------------------------------
+   INPUT
+------------------------------------------------- */
+
+$input = json_decode(file_get_contents("php://input"), true);
+
+$business_name = strtolower(trim($input['business_name'] ?? ''));
+$email         = strtolower(trim($input['email'] ?? ''));
+$mobile        = strtolower(trim($input['mobile'] ?? ''));
+
+/* -------------------------------------------------
+   VALIDATION
+------------------------------------------------- */
+
+$missing = [];
+if (!$business_name) $missing[] = "business_name";
+if (!$email)         $missing[] = "email";
+if (!$mobile)        $missing[] = "mobile";
+
+if (!empty($missing)) {
+    sendError(
+        "Missing fields: " . implode(", ", $missing),
+        400,
+        "VALIDATION_ERROR"
+    );
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    sendError("Invalid email format", 400, "INVALID_EMAIL");
+}
+
+if (!preg_match('/^[6-9]\d{9}$/', $mobile)) {
+    sendError("Invalid mobile number", 400, "INVALID_MOBILE");
+}
+
+/* -------------------------------------------------
+   DUPLICATE CHECK
+------------------------------------------------- */
+
+$stmt = $pdo->prepare("
+    SELECT id
+    FROM users
+    WHERE email = ? OR mobile = ?
+    LIMIT 1
+");
+$stmt->execute([$email, $mobile]);
+
+if ($stmt->fetch()) {
+    sendError(
+        "Email or mobile already exists",
+        409,
+        "DUPLICATE_ENTRY"
+    );
+}
+
+/* -------------------------------------------------
+   TRANSACTION
+------------------------------------------------- */
+
+try {
+    $pdo->beginTransaction();
+
+    /* INSERT USER */
+    $stmt = $pdo->prepare("
+        INSERT INTO users (role, name, email, mobile, status, created_at)
+        VALUES ('business', ?, ?, ?, 'INVITED', NOW())
+    ");
+    $stmt->execute([$business_name, $email, $mobile]);
+
+    $user_id = (int) $pdo->lastInsertId();
+
+    /* GENERATE TOKEN */
+    $token = bin2hex(random_bytes(32));
+
+    /* INSERT INVITE */
+    $stmt = $pdo->prepare("
+        INSERT INTO user_invites (user_id, token, expires_at, created_at)
+        VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 24 HOUR), NOW())
+    ");
+    $stmt->execute([$user_id, $token]);
+
+    /* -------------------------------------------------
+       SEND MAIL – DIRECT SMTP
+    ------------------------------------------------- */
+    
+    $activationLink = "http://localhost:3000/set-password/" . $token;
+    
+
+
+    $mail = new PHPMailer(true);
+
+$mail->isSMTP();
+$mail->Host       = '';
+$mail->SMTPAuth   = true;
+$mail->Username   = '';
+$mail->Password   = '';
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+$mail->Port       = 465;
+$mail->Timeout    = 20;
+
+$mail->setFrom('', 'Business Platform');
+$mail->addAddress($email);
+
+$mail->isHTML(true);
+$mail->Subject = 'Business Account Invitation';
+ $mail->Body = "
+        <p>Hello <strong>{$business_name}</strong>,</p>
+        <p>You are invited to create your business account.</p>
+        <p>
+            <a href='{$activationLink}'
+               style='padding:10px 15px;background:#000;color:#fff;text-decoration:none'>
+               Activate Account
+            </a>
+        </p>
+        <p>This link is valid for 24 hours.</p>
+    ";
+    
+
+    $mail->SMTPDebug  = 2;
+    $mail->Debugoutput = 'error_log';
+
+
+    $mail->send();
+
+    $pdo->commit();
+
+    sendSuccess("Invitation sent successfully", [
+        "user_id" => $user_id,
+        "email"   => $email
+    ]);
+
+} catch (Throwable $e) {
+    $pdo->rollBack();
+
+    sendError(
+        "Failed to send invitation",
+        500,
+        "SERVER_ERROR"
+    );
+}
+
+login_old.php
+
+<?php
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+/* -------------------------------------------------
+   PREFLIGHT
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+require_once __DIR__ . '/../helpers/db.php';
+require_once __DIR__ . '/../helpers/jwt.php';
+require_once __DIR__ . '/../helpers/response.php';
+
+
+/* -------------------------------------------------
+   METHOD VALIDATION
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendError("Method not allowed. Use POST", 405, "METHOD_NOT_ALLOWED");
+}
+
+/* -------------------------------------------------
+   INPUT
+------------------------------------------------- */
+$data = json_decode(file_get_contents("php://input"), true);
+
+$email    = strtolower(trim($data['email'] ?? ''));
+$password = $data['password'] ?? '';
+
+if (!$email || !$password) {
+    sendError("Email and password required", 400, "VALIDATION_ERROR");
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    sendError("Invalid email format", 400, "INVALID_EMAIL");
+}
+
+/* -------------------------------------------------
+   FETCH USER
+------------------------------------------------- */
+$stmt = $pdo->prepare("
+    SELECT id, role, password, status
+    FROM users
+    WHERE email = ?
+    LIMIT 1
+");
+$stmt->execute([$email]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    sendError("Invalid credentials", 401, "INVALID_CREDENTIALS");
+}
+
+/* -------------------------------------------------
+   PASSWORD VERIFY
+------------------------------------------------- */
+if (!password_verify($password, $user['password'])) {
+    sendError("Invalid credentials", 401, "INVALID_CREDENTIALS");
+}
+
+/* -------------------------------------------------
+   STATUS CHECK (PROJECT FLOW)
+------------------------------------------------- */
+if ($user['status'] === 'INVITED') {
+    sendError(
+        "Account not activated. Please activate using invite email",
+        403,
+        "ACCOUNT_NOT_ACTIVATED"
+    );
+}
+
+if ($user['status'] === 'BLOCKED') {
+    sendError(
+        "Account blocked. Contact administrator",
+        403,
+        "ACCOUNT_BLOCKED"
+    );
+}
+
+if ($user['status'] !== 'ACTIVE') {
+    sendError(
+        "Account not active",
+        403,
+        "ACCOUNT_INACTIVE"
+    );
+}
+
+/* -------------------------------------------------
+   JWT GENERATE
+------------------------------------------------- */
+$token = jwt_generate_token([
+    'id'   => $user['id'],
+    'role' => $user['role']
+]);
+
+/* -------------------------------------------------
+   RESPONSE
+------------------------------------------------- */
+sendSuccess("Login successful", [
+    "token" => $token,
+    "role"  => $user['role']
+]);
+
+
+login.php
+
+<?php
+require_once __DIR__ . '/../helpers/db.php';
+require_once __DIR__ . '/../helpers/jwt.php';
+require_once __DIR__ . '/../helpers/response.php';
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+/* -------------------------------------------------
+   PREFLIGHT
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+/* -------------------------------------------------
+   METHOD VALIDATION
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendError("Method not allowed. Use POST", 405, "METHOD_NOT_ALLOWED");
+}
+
+/* -------------------------------------------------
+   INPUT
+------------------------------------------------- */
+$data = json_decode(file_get_contents("php://input"), true);
+
+$email    = strtolower(trim($data['email'] ?? ''));
+$password = $data['password'] ?? '';
+
+if (!$email || !$password) {
+    sendError("Email and password required", 400, "VALIDATION_ERROR");
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    sendError("Invalid email format", 400, "INVALID_EMAIL");
+}
+
+/* -------------------------------------------------
+   FETCH USER + BUSINESS PROFILE
+------------------------------------------------- */
+$stmt = $pdo->prepare("
+    SELECT 
+        u.id,
+        u.role,
+        u.name,
+        u.email,
+        u.mobile,
+        u.password,
+        u.status,
+        bp.id AS business_profile_id,
+        bp.profile_completion
+    FROM users u
+    LEFT JOIN business_profiles bp ON bp.user_id = u.id
+    WHERE u.email = ?
+    LIMIT 1
+");
+$stmt->execute([$email]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    sendError("Invalid credentials", 401, "INVALID_CREDENTIALS");
+}
+
+/* -------------------------------------------------
+   PASSWORD VERIFY
+------------------------------------------------- */
+if (!password_verify($password, $user['password'])) {
+    sendError("Invalid credentials", 401, "INVALID_CREDENTIALS");
+}
+
+/* -------------------------------------------------
+   STATUS CHECK
+------------------------------------------------- */
+if ($user['status'] === 'INVITED') {
+    sendError(
+        "Account not activated. Please activate using invite email",
+        403,
+        "ACCOUNT_NOT_ACTIVATED"
+    );
+}
+
+if ($user['status'] === 'BLOCKED') {
+    sendError(
+        "Account blocked. Contact administrator",
+        403,
+        "ACCOUNT_BLOCKED"
+    );
+}
+
+if ($user['status'] !== 'ACTIVE') {
+    sendError(
+        "Account not active",
+        403,
+        "ACCOUNT_INACTIVE"
+    );
+}
+
+/* -------------------------------------------------
+   JWT GENERATE
+------------------------------------------------- */
+$token = jwt_generate_token([
+    'id'   => $user['id'],
+    'role' => $user['role']
+]);
+
+/* -------------------------------------------------
+   PROFILE COMPLETION LOGIC
+------------------------------------------------- */
+$profileCompletion = (int) ($user['profile_completion'] ?? 0);
+$profileCompleted  = ($profileCompletion === 100);
+
+/* -------------------------------------------------
+   RESPONSE
+------------------------------------------------- */
+sendSuccess("Login successful", [
+    "token" => $token,
+    "profile_completed" => $profileCompleted,
+    "profile_completion" => $profileCompletion,
+    "user" => [
+        "id" => (int)$user['id'],
+        "business_profile_id" => $user['business_profile_id']
+            ? (int)$user['business_profile_id']
+            : null,
+        "role"   => $user['role'],
+        "name"   => $user['name'],
+        "email"  => $user['email'],
+        "mobile" => $user['mobile'],
+        "status" => $user['status']
+    ]
+]);
+
+logout.php
+
+<?php
+require_once __DIR__ . '/middleware.php';
+require_once __DIR__ . '/../helpers/response.php';
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+/* -------------------------------------------------
+   PREFLIGHT
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+/* -------------------------------------------------
+   METHOD VALIDATION
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendError("Method not allowed. Use POST", 405, "METHOD_NOT_ALLOWED");
+}
+
+/* -------------------------------------------------
+   AUTH CHECK
+------------------------------------------------- */
+require_auth();
+
+/* -------------------------------------------------
+   LOGOUT RESPONSE
+------------------------------------------------- */
+sendSuccess("Logged out successfully");
+
+
+middleware.php
+<?php
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../helpers/db.php';
+require_once __DIR__ . '/../helpers/jwt.php';
+require_once __DIR__ . '/../helpers/response.php';
+
+/*
+|--------------------------------------------------------------------------
+| REQUIRE AUTH (JWT)
+|--------------------------------------------------------------------------
+| - Validates Bearer token
+| - Decodes JWT
+| - Sets $GLOBALS['auth_user'] = ['id','role']
+|--------------------------------------------------------------------------
+*/
+function require_auth(): void
+{
+    $headers = getallheaders();
+
+    if (empty($headers['Authorization'])) {
+        sendError("Authorization header missing", 401, "AUTH_HEADER_MISSING");
+    }
+
+    if (!preg_match('/Bearer\s+(\S+)/', $headers['Authorization'], $matches)) {
+        sendError("Invalid authorization header format", 401, "INVALID_AUTH_HEADER");
+    }
+
+    $token = $matches[1];
+    $payload = jwt_decode_token($token);
+
+    if (!$payload) {
+        sendError("Invalid or expired token", 401, "INVALID_TOKEN");
+    }
+
+    if (empty($payload->id) || empty($payload->role)) {
+        sendError("Invalid token payload", 401, "INVALID_TOKEN_PAYLOAD");
+    }
+
+    // Set authenticated user globally
+    $GLOBALS['auth_user'] = [
+        'id'   => (int) $payload->id,
+        'role' => $payload->role
+    ];
+}
+
+/*
+|--------------------------------------------------------------------------
+| REQUIRE ADMIN
+|--------------------------------------------------------------------------
+| Usage:
+|   require_admin();
+|--------------------------------------------------------------------------
+*/
+function require_admin(): void
+{
+    require_auth();
+
+    if ($GLOBALS['auth_user']['role'] !== 'admin') {
+        sendError("Admin access only", 403, "FORBIDDEN");
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| REQUIRE BUSINESS
+|--------------------------------------------------------------------------
+| Usage:
+|   require_business();
+|--------------------------------------------------------------------------
+*/
+function require_business(): void
+{
+    require_auth();
+
+    if ($GLOBALS['auth_user']['role'] !== 'business') {
+        sendError("Business access only", 403, "FORBIDDEN");
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| REQUIRE STAFF (Optional / Future)
+|--------------------------------------------------------------------------
+*/
+function require_staff(): void
+{
+    require_auth();
+
+    if ($GLOBALS['auth_user']['role'] !== 'staff') {
+        sendError("Staff access only", 403, "FORBIDDEN");
+    }
+}
+
+
+register.php
+
+<?php
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../helpers/db.php';
+require_once __DIR__ . '/../helpers/response.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+/* -------------------------------------------------
+   PREFLIGHT
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+/* -------------------------------------------------
+   METHOD VALIDATION
+------------------------------------------------- */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    sendError("Method not allowed. Use POST", 405, "METHOD_NOT_ALLOWED");
+}
+
+/* -------------------------------------------------
+   INPUT
+------------------------------------------------- */
+$data = json_decode(file_get_contents("php://input"), true);
+
+$name   = trim($data['name'] ?? '');
+$email  = strtolower(trim($data['email'] ?? ''));
+$mobile = trim($data['mobile'] ?? '');
+
+/* -------------------------------------------------
+   VALIDATION
+------------------------------------------------- */
+$errors = [];
+
+if (!$name || strlen($name) < 3) {
+    $errors[] = "Name must be at least 3 characters";
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors[] = "Invalid email format";
+}
+
+if (!preg_match('/^[6-9]\d{9}$/', $mobile)) {
+    $errors[] = "Invalid mobile number";
+}
+
+if (!empty($errors)) {
+    sendError(implode(", ", $errors), 400, "VALIDATION_ERROR");
+}
+
+/* -------------------------------------------------
+   DUPLICATE CHECK
+------------------------------------------------- */
+$stmt = $pdo->prepare("
+    SELECT id FROM users 
+    WHERE email = ? OR mobile = ?
+    LIMIT 1
+");
+$stmt->execute([$email, $mobile]);
+
+if ($stmt->fetch()) {
+    sendError(
+        "Email or mobile already registered",
+        409,
+        "DUPLICATE_ENTRY"
+    );
+}
+
+/* -------------------------------------------------
+   TRANSACTION
+------------------------------------------------- */
+try {
+    $pdo->beginTransaction();
+
+    /* CREATE USER */
+    $stmt = $pdo->prepare("
+        INSERT INTO users 
+        (role, name, email, mobile, status, email_verified, created_at)
+        VALUES 
+        ('business', ?, ?, ?, 'INVITED', 0, NOW())
+    ");
+    $stmt->execute([$name, $email, $mobile]);
+
+    $user_id = (int)$pdo->lastInsertId();
+
+    /* GENERATE TOKEN */
+    $token = bin2hex(random_bytes(32));
+
+    /* STORE TOKEN */
+    $stmt = $pdo->prepare("
+        INSERT INTO user_invites 
+        (user_id, token, expires_at, created_at)
+        VALUES 
+        (?, ?, DATE_ADD(NOW(), INTERVAL 24 HOUR), NOW())
+    ");
+    $stmt->execute([$user_id, $token]);
+
+    /* -------------------------------------------------
+       SEND VERIFICATION MAIL
+    ------------------------------------------------- */
+
+    $verificationLink = "http://localhost:3000/set-password/" . $token;
+    // production: https://yourdomain.com/set-password/$token
+
+    $mail = new PHPMailer(true);
+
+    $mail->isSMTP();
+    $mail->Host       = '';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = '';
+    $mail->Password   = '';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+    $mail->Port       = 465;
+
+    $mail->setFrom('', 'Business Platform');
+    $mail->addAddress($email, $name);
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Verify Your Account';
+
+    $mail->Body = "
+        <p>Hello <strong>{$name}</strong>,</p>
+        <p>Thanks for registering.</p>
+        <p>Click below to verify your email and set your password:</p>
+        <p>
+            <a href='{$verificationLink}'
+               style='padding:10px 15px;background:#000;color:#fff;text-decoration:none'>
+               Verify & Set Password
+            </a>
+        </p>
+        <p>This link expires in 24 hours.</p>
+    ";
+
+    /* SEND MAIL */
+    if (!$mail->send()) {
+        throw new Exception("Mail Error: " . $mail->ErrorInfo);
+    }
+
+    $pdo->commit();
+
+    sendSuccess("Registration successful. Verification email sent", [
+        "user_id" => $user_id,
+        "email"   => $email
+    ]);
+
+} catch (Throwable $e) {
+
+    $pdo->rollBack();
+
+    sendError(
+        "Registration failed: " . $e->getMessage(),
+        500,
+        "SERVER_ERROR"
+    );
+}

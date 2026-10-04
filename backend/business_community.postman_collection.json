@@ -1,0 +1,3096 @@
+{
+  "info": {
+    "_postman_id": "2218547a-4907-4763-b715-987fdb4fb65f",
+    "name": "business_community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48351098",
+    "_collection_link": "https://go.postman.co/collection/48351098-2218547a-4907-4763-b715-987fdb4fb65f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login.php",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"kabil4479@gmail.com\",\r\n    \"password\" : \"Kabil@2007\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/auth/login.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "auth",
+                "login.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "invite_create.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2MjExNDM3LCJleHAiOjE3NjYyOTc4MzcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.lvg6af62v9x1m_vPwjUj1jkGoODZMy9UkymbQUvhI3s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"business_name\": \"Sriram Supermarkets\",\r\n  \"email\": \"sriram8964@mountzion.ac.in\",\r\n  \"mobile\": \"9003408669\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/auth/invite_create.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "auth",
+                "invite_create.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "activate_account.php",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"token\": \"b0079513486eeeed008b0e6e96988cdcbf992c757b6e0c84b42b222c68151661\",\r\n  \"password\": \"Sri@2003\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/auth/activate_account.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "auth",
+                "activate_account.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2MjExNDM3LCJleHAiOjE3NjYyOTc4MzcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.lvg6af62v9x1m_vPwjUj1jkGoODZMy9UkymbQUvhI3s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/auth/logout.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "auth",
+                "logout.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "create.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIyODg5OSwiZXhwIjoxNzY2MzE1Mjk5LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.w8UajZS5xDTcSh4fvl4aydWR6udL2p4WGMSQzM6LEkU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "business_name",
+                  "value": "Sriram Supermarket",
+                  "type": "text"
+                },
+                {
+                  "key": "short_bio",
+                  "value": "wholesale grocery supplier",
+                  "type": "text"
+                },
+                {
+                  "key": "category_id",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "sub_category_id",
+                  "value": "3",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Sivaganga",
+                  "type": "text"
+                },
+                {
+                  "key": "area",
+                  "value": "Burma Colony",
+                  "type": "text"
+                },
+                {
+                  "key": "phone",
+                  "value": "9003408669",
+                  "type": "text"
+                },
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": "/E:/xampp/htdocs/public_html/images/logo.png.png"
+                },
+                {
+                  "key": "cover_image",
+                  "type": "file",
+                  "src": "/C:/Users/dheer/OneDrive/Pictures/Screenshots/Screenshot 2024-10-09 210518.png"
+                },
+                {
+                  "key": "website",
+                  "value": "https://qads.co",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost/business_community/users/create.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "create.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "business_name",
+                  "value": "Sriram Enterprises",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "short_bio",
+                  "value": "wholesale grocery supplier",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "category_id",
+                  "value": "1",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "sub_category_id",
+                  "value": "3",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "city",
+                  "value": "Karaikudi",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "area",
+                  "value": "Burma Colony",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "phone",
+                  "value": "9360552619",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "logo",
+                  "type": "file",
+                  "src": "/E:/xampp/htdocs/public_html/images/logo.png.png",
+                  "disabled": true
+                },
+                {
+                  "key": "cover_image",
+                  "type": "file",
+                  "src": "/E:/xampp/htdocs/public_html/images/cover.jpg"
+                },
+                {
+                  "key": "website",
+                  "value": "https://gnanasundariherbals.com/",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost/business_community/users/update.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "update.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/users/delete.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "delete.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "profile.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/users/profile.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "profile.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search_list.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/users/search_list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "search_list.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "view.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/users/view.php?id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "view.php"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "heartbeat.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MDc3NSwiZXhwIjoxNzY2NDY3MTc1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.XuiTX_DweeCdfSDz1FbrCz_c-uLxsseJZPf8idbh_pg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/users/heartbeat.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "users",
+                "heartbeat.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "catagory",
+      "item": [
+        {
+          "name": "cat_list.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/catagory/cat_list.php?page=2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "catagory",
+                "cat_list.php"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "sub_list.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/catagory/sub_list.php?category_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "catagory",
+                "sub_list.php"
+              ],
+              "query": [
+                {
+                  "key": "category_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "post",
+      "item": [
+        {
+          "name": "create.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "content",
+                  "value": "Hello Everyone Good Morning",
+                  "type": "text"
+                },
+                {
+                  "key": "post_type",
+                  "value": "IMAGE",
+                  "type": "text"
+                },
+                {
+                  "key": "media",
+                  "type": "file",
+                  "src": "postman-cloud:///1f07291c-e58b-45f0-b7f1-c344ad14c03e"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost/business_community/post/create.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "post",
+                "create.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\r\n    \"post_id\" : 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/post/delete.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "post",
+                "delete.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\r\n    \"post_id\" : 4,\r\n    \"content\" : \"Good afternoo brothers !!!!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/post/update.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "post",
+                "update.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "feed.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjIxNTI3MywiZXhwIjoxNzY2MzAxNjczLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uy0YwL8tOCp6n5qhVaMotfCUL2bDH_1ygVF00cCZk-M",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/post/feed.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "post",
+                "feed.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reaction.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjU1NDA2MiwiZXhwIjoxNzY2NjQwNDYyLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.k2hN3Yqs1_cwdH7veRQdd_sLvx0hMzXTQaybqsyMrVI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"post_id\" : 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/post/reaction.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "post",
+                "reaction.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "comment.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjU1NDA2MiwiZXhwIjoxNzY2NjQwNDYyLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.k2hN3Yqs1_cwdH7veRQdd_sLvx0hMzXTQaybqsyMrVI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"post_id\": 4,\r\n  \"comment\": \"nice update bro\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/post/comment.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "post",
+                "comment.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "chat",
+      "item": [
+        {
+          "name": "start.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MDc3NSwiZXhwIjoxNzY2NDY3MTc1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.XuiTX_DweeCdfSDz1FbrCz_c-uLxsseJZPf8idbh_pg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"user_id\" : 22\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/start.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "start.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "send.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjU1NDA2MiwiZXhwIjoxNzY2NjQwNDYyLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.k2hN3Yqs1_cwdH7veRQdd_sLvx0hMzXTQaybqsyMrVI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"chat_id\": 1,\r\n  \"message\": \"hi bro, nalla irukku q ads la irukken da \"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/send.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "send.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "message.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUwMjQzNiwiZXhwIjoxNzc0NTg4ODM2LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.QHi3KaNQZoix559nOsuNN3h0C1BqwHgD5WjAs68r09s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "chat_id",
+                  "value": "5",
+                  "type": "text",
+                  "uuid": "945eeff0-d0fb-463f-aa93-1d97848fc7bb"
+                },
+                {
+                  "key": "message",
+                  "value": "hiiiii",
+                  "type": "text",
+                  "uuid": "a79971db-4b9b-4f45-a55d-7c56c545668b",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "type": "text",
+                  "uuid": "c052b743-600f-412c-a37d-4382adac51a2",
+                  "value": "FILE"
+                },
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "7776454a-d145-4594-b3a8-e137e6d92ca3",
+                  "src": "/C:/Users/ragul/Downloads/quotation_QADS20261001 (2).pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/message.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "message.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "last_seen.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MTk4NSwiZXhwIjoxNzY2NDY4Mzg1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.REKlxr7grGoJCPvULfNNakGC-BQBNxDwSTUqfSLdOqU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/last_seen.php?user_id=23&chat_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "last_seen.php"
+              ],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "23"
+                },
+                {
+                  "key": "chat_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "list.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MTk4NSwiZXhwIjoxNzY2NDY4Mzg1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.REKlxr7grGoJCPvULfNNakGC-BQBNxDwSTUqfSLdOqU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "list.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "unread_count.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MTk4NSwiZXhwIjoxNzY2NDY4Mzg1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.REKlxr7grGoJCPvULfNNakGC-BQBNxDwSTUqfSLdOqU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/unread_count.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "unread_count.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mark_read.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MTk4NSwiZXhwIjoxNzY2NDY4Mzg1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.REKlxr7grGoJCPvULfNNakGC-BQBNxDwSTUqfSLdOqU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"chat_id\" : 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/mark_read.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "mark_read.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MTk4NSwiZXhwIjoxNzY2NDY4Mzg1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.REKlxr7grGoJCPvULfNNakGC-BQBNxDwSTUqfSLdOqU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"action\": \"delete_message\",\r\n  \"message_id\": 2\r\n}\r\n\r\nif chat deleted means  {\r\n  \"action\": \"delete_chat\",\r\n  \"chat_id\": 10\r\n}\r\n\r\nif message delete for everyone means --{\r\n  \"action\": \"delete_for_everyone\",\r\n  \"message_id\": 120\r\n}\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/delete.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "delete.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "typing.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"chat_id\" : 1\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/typing.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "typing.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "typing_status.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MDc3NSwiZXhwIjoxNzY2NDY3MTc1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.XuiTX_DweeCdfSDz1FbrCz_c-uLxsseJZPf8idbh_pg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"chat_id\" : 1\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/chat/typing_status.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "typing_status.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjMsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjM4MDc3NSwiZXhwIjoxNzY2NDY3MTc1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.XuiTX_DweeCdfSDz1FbrCz_c-uLxsseJZPf8idbh_pg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/chat/search.php?search=hi&type=message",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "chat",
+                "search.php"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "hi"
+                },
+                {
+                  "key": "type",
+                  "value": "message"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin_chat",
+      "item": [
+        {
+          "name": "start.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjQ2NzIxNiwiZXhwIjoxNzY2NTUzNjE2LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.dvUm5ZusEETUUSVmMmY667_vE6DTFKE34-zokQ4gtl4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"user_id\": 1\r\n}\r\n\r\nadmin to business - with auth token \r\n{\r\n  \"user_id\": 22\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/start.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "start.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "send.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NTU0OTk3LCJleHAiOjE3NjY2NDEzOTcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.neZpx32oeX0ml1x16hJgmnJxbvsNkZbHhvGZUHwTzw4 ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"chat_id\": 2,\r\n  \"message\": \"Hello, sriram !!!!\",\r\n  \"message_type\": \"TEXT\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/send.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "send.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "message.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NDc2MDg3LCJleHAiOjE3NjY1NjI0ODcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.x8KRx7FFFxk3UcVDinCrjfkOoYpz5MwShrlmSE-9I-0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/message.php?business_user_id=22",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "message.php"
+              ],
+              "query": [
+                {
+                  "key": "business_user_id",
+                  "value": "22"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "list.php",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "search.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjQ2NzIxNiwiZXhwIjoxNzY2NTUzNjE2LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.dvUm5ZusEETUUSVmMmY667_vE6DTFKE34-zokQ4gtl4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/search.php?search=doc&type=message",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "search.php"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "doc"
+                },
+                {
+                  "key": "type",
+                  "value": "message"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjQ2NzIxNiwiZXhwIjoxNzY2NTUzNjE2LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.dvUm5ZusEETUUSVmMmY667_vE6DTFKE34-zokQ4gtl4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"action\": \"delete_for_everyone\",\r\n  \"message_id\": 5\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/delete.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "delete.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "unread_count.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NDc2MDg3LCJleHAiOjE3NjY1NjI0ODcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.x8KRx7FFFxk3UcVDinCrjfkOoYpz5MwShrlmSE-9I-0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/unread_count.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "unread_count.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mark_read.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NDc2MDg3LCJleHAiOjE3NjY1NjI0ODcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.x8KRx7FFFxk3UcVDinCrjfkOoYpz5MwShrlmSE-9I-0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"business_user_id\" : 22}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin_chat/mark_read.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin_chat",
+                "mark_read.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "notification",
+      "item": [
+        {
+          "name": "list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTYsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUwMDY0OCwiZXhwIjoxNzc0NTg3MDQ4LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.D8WM97BF2DMarXSc2HIm8dc0788A2wCXwym5RUPrVls",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/notification/list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "notification",
+                "list.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mark_read.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjU1MjgyNCwiZXhwIjoxNzY2NjM5MjI0LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.et8CAVBVoGQ3OHXoapDDJYD1lmKqGXBaWrDtFPJXuh0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"notification_id\": 2\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/notification/mark_read.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "notification",
+                "mark_read.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "unread_count.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjU1MjgyNCwiZXhwIjoxNzY2NjM5MjI0LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.et8CAVBVoGQ3OHXoapDDJYD1lmKqGXBaWrDtFPJXuh0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/notification/unread_count.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "notification",
+                "unread_count.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mark_all_read.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MjIsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc2NjU1MjgyNCwiZXhwIjoxNzY2NjM5MjI0LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.et8CAVBVoGQ3OHXoapDDJYD1lmKqGXBaWrDtFPJXuh0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/notification/mark_all_read.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "notification",
+                "mark_all_read.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "activity_log.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NTU0OTk3LCJleHAiOjE3NjY2NDEzOTcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.neZpx32oeX0ml1x16hJgmnJxbvsNkZbHhvGZUHwTzw4 ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/admin/activity_log.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin",
+                "activity_log.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "announcement.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NTU0OTk3LCJleHAiOjE3NjY2NDEzOTcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.neZpx32oeX0ml1x16hJgmnJxbvsNkZbHhvGZUHwTzw4 ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"message\": \"Tomorrow system maintenance at 10 PM\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin/announcement.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin",
+                "announcement.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "list.php",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NTU0OTk3LCJleHAiOjE3NjY2NDEzOTcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.neZpx32oeX0ml1x16hJgmnJxbvsNkZbHhvGZUHwTzw4 ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "?page=1\r\n&limit=20\r\n&search=sriram\r\n&status=ACTIVE\r\n&from_date=2025-01-01\r\n&to_date=2025-12-31\r\n"
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin/list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin",
+                "list.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "dashboard.php",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Visualization Script",
+                  "// Visualization Script",
+                  "var template = `",
+                  "<div style=\"font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;\">",
+                  "    <h2 style=\"text-align: center; color: #333; margin-bottom: 30px;\">Admin Dashboard Analytics</h2>",
+                  "    ",
+                  "    <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 20px;\">",
+                  "        <!-- Summary Statistics Bar Chart -->",
+                  "        <div style=\"background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">",
+                  "            <canvas id=\"summaryChart\" height=\"200\"></canvas>",
+                  "        </div>",
+                  "        ",
+                  "        <!-- Messages Per Day Line Chart -->",
+                  "        <div style=\"background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">",
+                  "            <canvas id=\"messagesChart\" height=\"200\"></canvas>",
+                  "        </div>",
+                  "        ",
+                  "        <!-- Business Registrations Bar Chart -->",
+                  "        <div style=\"background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">",
+                  "            <canvas id=\"registrationsChart\" height=\"200\"></canvas>",
+                  "        </div>",
+                  "        ",
+                  "        <!-- Posts Per Day Bar Chart -->",
+                  "        <div style=\"background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">",
+                  "            <canvas id=\"postsChart\" height=\"200\"></canvas>",
+                  "        </div>",
+                  "    </div>",
+                  "</div>",
+                  "",
+                  "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js\"></script>",
+                  "<script>",
+                  "    pm.getData(function (err, value) {",
+                  "        var data = value.response;",
+                  "        ",
+                  "        // Summary Statistics Bar Chart",
+                  "        var summaryCtx = document.getElementById('summaryChart').getContext('2d');",
+                  "        new Chart(summaryCtx, {",
+                  "            type: 'bar',",
+                  "            data: {",
+                  "                labels: ['Total Businesses', 'Active Businesses', 'Inactive Businesses', 'Total Posts', 'Total Chats', 'Total Messages', 'Today Messages'],",
+                  "                datasets: [{",
+                  "                    label: 'Summary Statistics',",
+                  "                    data: [",
+                  "                        data.summary.total_businesses,",
+                  "                        data.summary.active_businesses,",
+                  "                        data.summary.inactive_businesses,",
+                  "                        data.summary.total_posts,",
+                  "                        data.summary.total_chats,",
+                  "                        data.summary.total_messages,",
+                  "                        data.summary.today_messages",
+                  "                    ],",
+                  "                    backgroundColor: [",
+                  "                        '#3498db',",
+                  "                        '#2ecc71',",
+                  "                        '#e74c3c',",
+                  "                        '#9b59b6',",
+                  "                        '#f39c12',",
+                  "                        '#1abc9c',",
+                  "                        '#34495e'",
+                  "                    ],",
+                  "                    borderColor: [",
+                  "                        '#2980b9',",
+                  "                        '#27ae60',",
+                  "                        '#c0392b',",
+                  "                        '#8e44ad',",
+                  "                        '#d68910',",
+                  "                        '#16a085',",
+                  "                        '#2c3e50'",
+                  "                    ],",
+                  "                    borderWidth: 1",
+                  "                }]",
+                  "            },",
+                  "            options: {",
+                  "                title: {",
+                  "                    display: true,",
+                  "                    text: 'Summary Statistics',",
+                  "                    fontSize: 16",
+                  "                },",
+                  "                legend: { display: false },",
+                  "                scales: {",
+                  "                    yAxes: [{",
+                  "                        ticks: { beginAtZero: true }",
+                  "                    }]",
+                  "                }",
+                  "            }",
+                  "        });",
+                  "        ",
+                  "        // Messages Per Day Line Chart",
+                  "        var messagesCtx = document.getElementById('messagesChart').getContext('2d');",
+                  "        new Chart(messagesCtx, {",
+                  "            type: 'line',",
+                  "            data: {",
+                  "                labels: data.messages_per_day.map(function(item) { return item.day; }),",
+                  "                datasets: [{",
+                  "                    label: 'Messages',",
+                  "                    data: data.messages_per_day.map(function(item) { return item.total; }),",
+                  "                    backgroundColor: 'rgba(52, 152, 219, 0.2)',",
+                  "                    borderColor: '#3498db',",
+                  "                    borderWidth: 2,",
+                  "                    fill: true,",
+                  "                    tension: 0.1,",
+                  "                    pointBackgroundColor: '#3498db',",
+                  "                    pointRadius: 5",
+                  "                }]",
+                  "            },",
+                  "            options: {",
+                  "                title: {",
+                  "                    display: true,",
+                  "                    text: 'Messages Per Day',",
+                  "                    fontSize: 16",
+                  "                },",
+                  "                legend: { display: false },",
+                  "                scales: {",
+                  "                    xAxes: [{",
+                  "                        scaleLabel: {",
+                  "                            display: true,",
+                  "                            labelString: 'Date'",
+                  "                        }",
+                  "                    }],",
+                  "                    yAxes: [{",
+                  "                        ticks: { beginAtZero: true },",
+                  "                        scaleLabel: {",
+                  "                            display: true,",
+                  "                            labelString: 'Messages'",
+                  "                        }",
+                  "                    }]",
+                  "                }",
+                  "            }",
+                  "        });",
+                  "        ",
+                  "        // Business Registrations Bar Chart",
+                  "        var registrationsCtx = document.getElementById('registrationsChart').getContext('2d');",
+                  "        new Chart(registrationsCtx, {",
+                  "            type: 'bar',",
+                  "            data: {",
+                  "                labels: data.business_registrations.map(function(item) { return item.day; }),",
+                  "                datasets: [{",
+                  "                    label: 'Registrations',",
+                  "                    data: data.business_registrations.map(function(item) { return item.total; }),",
+                  "                    backgroundColor: '#2ecc71',",
+                  "                    borderColor: '#27ae60',",
+                  "                    borderWidth: 1",
+                  "                }]",
+                  "            },",
+                  "            options: {",
+                  "                title: {",
+                  "                    display: true,",
+                  "                    text: 'Business Registrations Per Day',",
+                  "                    fontSize: 16",
+                  "                },",
+                  "                legend: { display: false },",
+                  "                scales: {",
+                  "                    xAxes: [{",
+                  "                        scaleLabel: {",
+                  "                            display: true,",
+                  "                            labelString: 'Date'",
+                  "                        }",
+                  "                    }],",
+                  "                    yAxes: [{",
+                  "                        ticks: { beginAtZero: true },",
+                  "                        scaleLabel: {",
+                  "                            display: true,",
+                  "                            labelString: 'Registrations'",
+                  "                        }",
+                  "                    }]",
+                  "                }",
+                  "            }",
+                  "        });",
+                  "        ",
+                  "        // Posts Per Day Bar Chart",
+                  "        var postsCtx = document.getElementById('postsChart').getContext('2d');",
+                  "        new Chart(postsCtx, {",
+                  "            type: 'bar',",
+                  "            data: {",
+                  "                labels: data.posts_per_day.map(function(item) { return item.day; }),",
+                  "                datasets: [{",
+                  "                    label: 'Posts',",
+                  "                    data: data.posts_per_day.map(function(item) { return item.total; }),",
+                  "                    backgroundColor: '#9b59b6',",
+                  "                    borderColor: '#8e44ad',",
+                  "                    borderWidth: 1",
+                  "                }]",
+                  "            },",
+                  "            options: {",
+                  "                title: {",
+                  "                    display: true,",
+                  "                    text: 'Posts Per Day',",
+                  "                    fontSize: 16",
+                  "                },",
+                  "                legend: { display: false },",
+                  "                scales: {",
+                  "                    xAxes: [{",
+                  "                        scaleLabel: {",
+                  "                            display: true,",
+                  "                            labelString: 'Date'",
+                  "                        }",
+                  "                    }],",
+                  "                    yAxes: [{",
+                  "                        ticks: { beginAtZero: true },",
+                  "                        scaleLabel: {",
+                  "                            display: true,",
+                  "                            labelString: 'Posts'",
+                  "                        }",
+                  "                    }]",
+                  "                }",
+                  "            }",
+                  "        });",
+                  "    });",
+                  "</script>",
+                  "`;",
+                  "",
+                  "function createPayload() {",
+                  "    var jsonData = pm.response.json();",
+                  "    var data = jsonData.data || {};",
+                  "    var summary = data.summary || {};",
+                  "    var graphs = data.graphs || {};",
+                  "    ",
+                  "    return {",
+                  "        response: {",
+                  "            summary: {",
+                  "                total_businesses: summary.total_businesses || 0,",
+                  "                active_businesses: summary.active_businesses || 0,",
+                  "                inactive_businesses: summary.inactive_businesses || 0,",
+                  "                total_posts: summary.total_posts || 0,",
+                  "                total_chats: summary.total_chats || 0,",
+                  "                total_messages: summary.total_messages || 0,",
+                  "                today_messages: summary.today_messages || 0",
+                  "            },",
+                  "            messages_per_day: graphs.messages_per_day || [],",
+                  "            business_registrations: graphs.business_registrations || [],",
+                  "            posts_per_day: graphs.posts_per_day || []",
+                  "        }",
+                  "    };",
+                  "}",
+                  "",
+                  "pm.visualizer.set(template, createPayload());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY2NTU0OTk3LCJleHAiOjE3NjY2NDEzOTcsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.neZpx32oeX0ml1x16hJgmnJxbvsNkZbHhvGZUHwTzw4 ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "?page=1\r\n&limit=20\r\n&search=sriram\r\n&status=ACTIVE\r\n&from_date=2025-01-01\r\n&to_date=2025-12-31\r\n"
+            },
+            "url": {
+              "raw": "http://localhost/business_community/admin/dashboard.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "admin",
+                "dashboard.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "communities",
+      "item": [
+        {
+          "name": "create.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQyOTMzOCwiZXhwIjoxNzc0NTE1NzM4LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.w88Fix_O-aD7C7cy-7sHb_IKGSXAV0_Dg-aidLhm9JQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"party Event Group\",\r\n  \"description\": \"All vendors for this event\",\r\n  \"type\": \"EVENT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/communities/create.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "create.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "invite.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQ5OTk5OCwiZXhwIjoxNzc0NTg2Mzk4LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.KEgoTNy7fwajATvNcVQL-lYBtSyYXTl9IykLuueT3IM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"community_id\": 1,\r\n  \"invited_user_id\":17\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/communities/invite.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "invite.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "respond.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTcsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUwMTg3NywiZXhwIjoxNzc0NTg4Mjc3LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.jhHdAjFm1opv-bnN3kz7QVGE8dQb9CMUNlQrIvrN0Ts",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"invite_id\": 4,\r\n  \"status\": \"ACCEPTED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/communities/respond.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "respond.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "msg.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTYsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDMzNzk4OCwiZXhwIjoxNzc0NDI0Mzg4LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.eIiJdne1CjbUoplPffnmBtMDPt_Grs8jEcb1z5qHzL4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"community_id\": 1,\r\n  \"message\": \"i'm ragul sir 👋\",\r\n  \"message_type\": \"TEXT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/communities/msg.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "msg.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "community_members_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0NDE3MjYxLCJleHAiOjE3NzQ1MDM2NjEsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.MvvgvEKBT8YX022CJRGgdZVSYRELVY11eYTbZ9j6_ig",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/communities/community_members_list.php?community_id=1&q=hotels",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "community_members_list.php"
+              ],
+              "query": [
+                {
+                  "key": "community_id",
+                  "value": "1"
+                },
+                {
+                  "key": "q",
+                  "value": "hotels"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "msg_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0NDE3MjYxLCJleHAiOjE3NzQ1MDM2NjEsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.MvvgvEKBT8YX022CJRGgdZVSYRELVY11eYTbZ9j6_ig",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/communities/msg_list.php?community_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "msg_list.php"
+              ],
+              "query": [
+                {
+                  "key": "community_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "inactive.php",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/communities/inactive.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "inactive.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQ5OTI4MiwiZXhwIjoxNzc0NTg1NjgyLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.zGv2lJ-dU6JhL_x9cdEpmgzpBA6ZeCUk5LW77gZuQhc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"community_id\": 2,\r\n  \"name\": \"Updated Business Hub\",\r\n  \"description\": \"New description\",\r\n  \"type\": \"BUSINESS\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/communities/update.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "communities",
+                "update.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "members_remove.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "events",
+      "item": [
+        {
+          "name": "create.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "community_search.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0NDE3MjYxLCJleHAiOjE3NzQ1MDM2NjEsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.MvvgvEKBT8YX022CJRGgdZVSYRELVY11TbZ9j6_ig",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/events/community_search.php?q=marriage",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "events",
+                "community_search.php"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "marriage"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "community_link.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "invite_vendor.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDM0Mjg4NSwiZXhwIjoxNzc0NDI5Mjg1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.zH5b_ZjrA9U8T_Nfenykg1EOXhsdC_fdZyjxyKlUfAc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"event_id\": 1,\r\n  \"vendor_id\": 16,\r\n  \"service_type\": \"Photography\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/events/invite_vendor.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "events",
+                "invite_vendor.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "respond.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTYsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDM0Nzk0MSwiZXhwIjoxNzc0NDM0MzQxLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.a8clwK69T2OEwokzvqtUDeAqPwBnsA-7dzviZg-0Lac",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"event_vendor_id\": 3,\r\n  \"status\": \"ACCEPTED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/events/respond.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "events",
+                "respond.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "event_vendor_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDM0OTEzOSwiZXhwIjoxNzc0NDM1NTM5LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.RBYijbWlcmlB2_zZsGIj1Wr09B9-3524YUyrZb-jOSo",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/events/event_vendor_list.php?event_id=1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "events",
+                "event_vendor_list.php"
+              ],
+              "query": [
+                {
+                  "key": "event_id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "event_list.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "event_update.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQxOTM1NSwiZXhwIjoxNzc0NTA1NzU1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.-KPpZVJjjAKW-I3UHISKI85-0MrabPiZsJ5zMRVeVKM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"event_id\": 1,\r\n  \"title\": \"Updated Marriage Event\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/events/event_update.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "events",
+                "event_update.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "complete.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "item": [
+        {
+          "name": "review.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "review_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQzODQ1NywiZXhwIjoxNzc0NTI0ODU3LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.wHDSIeM8KgbjIdGDemU0VTE8Kr8vugPQRdDXl34B6v8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/reviews/review_list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "reviews",
+                "review_list.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQzODQ1NywiZXhwIjoxNzc0NTI0ODU3LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.wHDSIeM8KgbjIdGDemU0VTE8Kr8vugPQRdDXl34B6v8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"review_id\":2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/reviews/delete.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "reviews",
+                "delete.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "mini_crm",
+      "item": [
+        {
+          "name": "create.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQyNzU3NSwiZXhwIjoxNzc0NTEzOTc1LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.fewbR-PiqLM-DCxw8DNodJRv6D6AKl8GCP5fNvcyojg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"receiver_id\": 18,\r\n  \"title\": \"Wedding Photography Deal\",\r\n  \"description\": \"Need full coverage for event\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/mini_crm/create.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "mini_crm",
+                "create.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "respond.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "complete.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "msg.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "deal_msg_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTgsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDQzNTcxMywiZXhwIjoxNzc0NTIyMTEzLCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.GspIugc5VUjAtsXeTcHGCTQNcvpW5Ww3p9FFrb9Fpag",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/mini_crm/deal_msg_list.php?deal_id=3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "mini_crm",
+                "deal_msg_list.php"
+              ],
+              "query": [
+                {
+                  "key": "deal_id",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "msg_delete.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "deals_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUwMjQzNiwiZXhwIjoxNzc0NTg4ODM2LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.QHi3KaNQZoix559nOsuNN3h0C1BqwHgD5WjAs68r09s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/mini_crm/deals_list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "mini_crm",
+                "deals_list.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "top_vendors",
+      "item": [
+        {
+          "name": "top_vendor.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUyMzc5NCwiZXhwIjoxNzc0NjEwMTk0LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.ZViCKwZs07Aii5CiZOGKjqADF9dAK043-HbIWjaTIT8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/top_vendors/top_vendor.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "top_vendors",
+                "top_vendor.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "verified_batch",
+      "item": [
+        {
+          "name": "verify_request.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUwNjcwOSwiZXhwIjoxNzc0NTkzMTA5LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.uqEsxDSd_o64LRYFb9JryWihKHBY-5HS5MAt649UMP0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"gst_number\": \"33ABCDE1234F1Z5\",\r\n  \"license_number\": \"LIC-2026-001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost/business_community/verified_batch/verify_request.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "verified_batch",
+                "verify_request.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "verify_respond.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "verify_pending.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0NTA3NTgzLCJleHAiOjE3NzQ1OTM5ODMsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.vqMA3mRE03G72iin-g6BHB04C1WilvaXB7Tx6BAQzfI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/verified_batch/verify_pending.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "verified_batch",
+                "verify_pending.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "verified_list.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0NTA3NTgzLCJleHAiOjE3NzQ1OTM5ODMsImlzcyI6ImJ1c2luZXNzX2NvbW11bml0eSJ9.vqMA3mRE03G72iin-g6BHB04C1WilvaXB7Tx6BAQzfI",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/verified_batch/verified_list.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "verified_batch",
+                "verified_list.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "meetings",
+      "item": [
+        {
+          "name": "create.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "list.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "delete.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "update.php",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "calendar.php",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTUsInJvbGUiOiJidXNpbmVzcyIsImlhdCI6MTc3NDUxMDgyNiwiZXhwIjoxNzc0NTk3MjI2LCJpc3MiOiJidXNpbmVzc19jb21tdW5pdHkifQ.UGwgRzMHG3hzG0uMbSujiPrS_KyHS9HZVYI17wvJe2s",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost/business_community/meetings/calendar.php",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "path": [
+                "business_community",
+                "meetings",
+                "calendar.php"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
